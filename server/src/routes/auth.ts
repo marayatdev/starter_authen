@@ -1,21 +1,24 @@
 import { Router, Request, Response } from "express";
-import { IndexController } from "../controllers/auth";
-export class Routes {
+import { AuthController } from "../controllers/auth";
+import authenticateToken from "../middlewares/auth";
+export class AuthRoutes {
 
     public path: string = "/auth";
 
     public router: Router = Router();
 
-    public indexController = new IndexController();
+    public authController = new AuthController();
 
     constructor() {
         this.initializeRoutes();
     }
 
     private initializeRoutes() {
-        this.router.post(`${this.path}/register`, this.indexController.register);
+        this.router.post(`${this.path}/register`, this.authController.register);
+        this.router.post(`${this.path}/login`, this.authController.login);
+        this.router.get(`${this.path}/getUserMe`, authenticateToken, this.authController.getUserMe);
     }
 
 }
 
-export default new Routes().router;
+export default new AuthRoutes().router;
