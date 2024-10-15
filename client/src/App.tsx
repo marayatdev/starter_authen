@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./contexts/ProtectedRoute";
+import { UserProvider } from "./contexts/UserContext";
+import { NotFoundTitle } from "./pages/NotFound/NotFoundTitle";
+import Dashboard from "./pages/Admin/Dashboard";
+import Home from "./pages/User/Home";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <UserProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+
+          <Route element={<ProtectedRoute requiredRole={1} />}>
+            <Route path="/admin" element={<Dashboard />} />
+          </Route>
+
+          <Route element={<ProtectedRoute requiredRole={2} />}>
+            <Route path="/user" element={<Home />} />
+          </Route>
+
+          <Route path="*" element={<NotFoundTitle />} />
+        </Routes>
+      </Router>
+    </UserProvider>
+  );
 }
 
-export default App
+export default App;
