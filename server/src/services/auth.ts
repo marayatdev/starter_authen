@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import logger, { logDebug, logError } from "../utils/logger";
-import { Register } from "../models";
+import { Register } from "../models/auth";
 
 export class AuthService {
     private prisma = new PrismaClient();

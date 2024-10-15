@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { IndexController } from "../controllers";
+import { IndexController } from "../controllers/auth";
 export class Routes {
 
     public path: string = "/auth";

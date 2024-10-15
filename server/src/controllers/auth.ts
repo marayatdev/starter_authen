@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { AuthService } from "../services";
-import { Register } from "../models";
+import { AuthService } from "../services/auth";
+import { Register } from "../models/auth";
 import { TypedRequestBody } from "../utils/request";
 
 
