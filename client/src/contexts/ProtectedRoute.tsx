@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useUser } from "./UserContext";
 
 interface ProtectedRouteProps {
-  requiredRole: number; // role that is allowed to access
+  requiredRole: number; // Role that is allowed to access
 }
 
 const ProtectedRoute = ({ requiredRole }: ProtectedRouteProps) => {
