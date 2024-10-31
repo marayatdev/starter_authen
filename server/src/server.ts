@@ -31,7 +31,7 @@ class App {
     }
 
     private configureMiddleware(): void {
-        this.app.use(morgan("combined"));
+        this.app.use(morgan("dev"));
         this.app.use(cors());
         this.app.use(bodyParser.json());
     }

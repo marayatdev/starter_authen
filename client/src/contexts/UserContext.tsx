@@ -20,9 +20,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetchUserRole = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/auth/getUserMe"
-        );
+        const response = await axios.get("http://localhost:3000/api/auth/me", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("Token")}`,
+          },
+        });
         setRole(response.data.role);
       } catch (error) {
         console.error("Failed to fetch user role", error);
