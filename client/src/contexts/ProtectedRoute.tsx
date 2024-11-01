@@ -1,18 +1,25 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useUser } from "./UserContext";
 
 interface ProtectedRouteProps {
-  requiredRole: number; // Role that is allowed to access
+  children?: React.ReactNode;
+  requireRoles?: string[];
 }
 
-const ProtectedRoute = ({ requiredRole }: ProtectedRouteProps) => {
-  const { role } = useUser();
+const ProtectRoute = ({ children, requireRoles = [] }: ProtectedRouteProps) => {
+  const userRole = sessionStorage.getItem("userRole");
+  const isAuthen = !!sessionStorage.getItem("isAuth");
 
-  if (role !== requiredRole) {
-    return <Navigate to="/" replace />;
+  if (!isAuthen) {
+    return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />;
+  const matchRoles =
+    !requireRoles.length || requireRoles.includes(userRole as string);
+  if (!matchRoles) {
+    return <Navigate to="*" replace />;
+  }
+
+  return children ? children : <Outlet />;
 };
 
-export default ProtectedRoute;
+export default ProtectRoute;

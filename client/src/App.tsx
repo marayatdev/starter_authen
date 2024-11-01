@@ -1,33 +1,27 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ProtectedRoute from "./contexts/ProtectedRoute";
-import { UserProvider } from "./contexts/UserContext";
+import ProtectRoute from "./contexts/ProtectedRoute";
 import { NotFoundTitle } from "./pages/NotFound/NotFoundTitle";
-import Dashboard from "./pages/Admin/Dashboard";
-import Home from "./pages/Users/Home";
+import UserPage from "./pages/Users/UserPage";
 import { Login } from "./pages/Auth/SigniIn/Login";
+import AdminDashboard from "./pages/Admin/Dashboard";
+import Home from "./pages/Home/Home";
 
 function App() {
   return (
-    <UserProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFoundTitle />} />
 
-          {/* Protected route for admin (role 1) */}
-          <Route element={<ProtectedRoute requiredRole={1} />}>
-            <Route path="/admin" element={<Dashboard />} />
-          </Route>
+        <Route path="/users" element={<ProtectRoute requireRoles={["1"]} />}>
+          <Route path="" element={<UserPage />} />
+        </Route>
 
-          {/* Protected route for user (role 2) */}
-          <Route element={<ProtectedRoute requiredRole={2} />}>
-            <Route path="/user" element={<Home />} />
-          </Route>
-
-          {/* Catch-all route for 404 page */}
-          <Route path="*" element={<NotFoundTitle />} />
-        </Routes>
-      </Router>
-    </UserProvider>
+        <Route path="/admin" element={<ProtectRoute requireRoles={["2"]} />}>
+          <Route path="" element={<AdminDashboard />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 

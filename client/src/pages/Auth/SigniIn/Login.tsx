@@ -54,8 +54,8 @@ export function Login() {
 
   const handleSubmitLogin = async (values: Login) => {
     try {
-      await login(values.email, values.password);
-      navigate("/dashboard");
+      const response = await login(values.email, values.password);
+      response.role === 1 ? navigate("/users") : navigate("/admin");
     } catch (error) {
       console.error("Login failed:", error);
       LoginForm.setErrors({

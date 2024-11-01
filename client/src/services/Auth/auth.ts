@@ -11,7 +11,9 @@ export const login = async (email: string, password: string) => {
         });
 
         if (response.data) {
-            localStorage.setItem("Token", JSON.stringify(response.data));
+            localStorage.setItem("token", JSON.stringify(response.data));
+            sessionStorage.setItem('isAuth', 'true');
+            sessionStorage.setItem('userRole', JSON.stringify(Number(response.data.role)));
             return response.data;
         }
 
