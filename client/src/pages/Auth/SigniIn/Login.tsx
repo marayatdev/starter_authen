@@ -11,8 +11,8 @@ import {
   Anchor,
   Stack,
 } from "@mantine/core";
-import { GoogleButton } from "./GoogleButton";
-import { TwitterButton } from "./TwitterButton";
+import { GoogleButton } from "../LogoSignIn/GoogleButton";
+import { TwitterButton } from "../LogoSignIn/TwitterButton";
 import { login, register } from "../../../services/Auth/auth";
 import { useNavigate } from "react-router-dom";
 import type { Login, Register } from "../../../interfaces/Auth/auth";
@@ -70,7 +70,7 @@ export function Login() {
   const handleSubmitRegister = async (values: Register) => {
     try {
       await register(values.username, values.email, values.password);
-      navigate("/dashboard");
+      navigate("/home");
     } catch (error) {
       console.error("Register failed:", error);
       RegisterForm.setErrors({
