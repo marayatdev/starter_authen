@@ -29,10 +29,7 @@ export const register = async (username: string, email: string, password: string
             password,
         });
 
-        if (response.data) {
-            localStorage.setItem("Token", JSON.stringify(response.data));
-            return response.data;
-        }
+        return response.data;
     } catch (error) {
         throw error;
     }

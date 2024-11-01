@@ -70,7 +70,7 @@ export function Login() {
   const handleSubmitRegister = async (values: Register) => {
     try {
       await register(values.username, values.email, values.password);
-      navigate("/home");
+      toggleType();
     } catch (error) {
       console.error("Register failed:", error);
       RegisterForm.setErrors({
