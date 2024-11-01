@@ -10,7 +10,7 @@ const ProtectRoute = ({ children, requireRoles = [] }: ProtectedRouteProps) => {
   const isAuthen = !!sessionStorage.getItem("isAuth");
 
   if (!isAuthen) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   const matchRoles =
