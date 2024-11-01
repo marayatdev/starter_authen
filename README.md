@@ -6,9 +6,7 @@ This repository is a full-stack starter project for implementing authentication 
 - [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Server Structure](#server-structure)
-- [Client Structure](#client-structure)
-- [Usage](#usage)
+
 
 ## Features
 - **Server**: Node.js (TypeScript), Prisma ORM, Argon2 password hashing, JWT-based authentication.
