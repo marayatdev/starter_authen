@@ -1,7 +1,12 @@
-import React from "react";
+import SigOut from "../../components/Button/LogOut/SigOut";
 
 const AdminDashboard = () => {
-  return <div>Admin Dashboard</div>;
+  return (
+    <>
+      Admin Dashboard
+      <SigOut />
+    </>
+  );
 };
 
 export default AdminDashboard;

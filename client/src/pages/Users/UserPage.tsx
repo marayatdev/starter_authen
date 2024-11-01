@@ -1,7 +1,12 @@
-import React from "react";
+import SigOut from "../../components/Button/LogOut/SigOut";
 
 const UserPage = () => {
-  return <div>User Home</div>;
+  return (
+    <>
+      User Home
+      <SigOut />
+    </>
+  );
 };
 
 export default UserPage;

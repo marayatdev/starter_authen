@@ -16,7 +16,7 @@ const ProtectRoute = ({ children, requireRoles = [] }: ProtectedRouteProps) => {
   const matchRoles =
     !requireRoles.length || requireRoles.includes(userRole as string);
   if (!matchRoles) {
-    return <Navigate to="*" replace />;
+    return <Navigate to="/404" replace />;
   }
 
   return children ? children : <Outlet />;
