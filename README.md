@@ -16,7 +16,7 @@ This repository is a full-stack starter project for implementing authentication 
 
 ## Prerequisites
 Make sure you have the following installed:
-- [Node.js](https://nodejs.org/)  >= v20.18.0
+- [Node.js >= v20.18.0](https://nodejs.org/)  
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/)
 
