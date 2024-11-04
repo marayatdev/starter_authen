@@ -2,19 +2,22 @@ import { Navigate, Outlet } from "react-router-dom";
 
 interface ProtectedRouteProps {
   children?: React.ReactNode;
-  requireRoles?: string[];
+  requireRoles?: number[];
 }
 
-const ProtectRoute = ({ children, requireRoles = [] }: ProtectedRouteProps) => {
-  const userRole = sessionStorage.getItem("userRole");
-  const isAuthen = !!sessionStorage.getItem("isAuth");
+const ProtectedRoute = ({
+  children,
+  requireRoles = [],
+}: ProtectedRouteProps) => {
+  const userRole = localStorage.getItem("userRole");
+  const isAuthen = !!localStorage.getItem("isAuth");
 
   if (!isAuthen) {
     return <Navigate to="/" replace />;
   }
 
   const matchRoles =
-    !requireRoles.length || requireRoles.includes(userRole as string);
+    !requireRoles.length || requireRoles.includes(Number(userRole));
   if (!matchRoles) {
     return <Navigate to="/404" replace />;
   }
@@ -22,4 +25,4 @@ const ProtectRoute = ({ children, requireRoles = [] }: ProtectedRouteProps) => {
   return children ? children : <Outlet />;
 };
 
-export default ProtectRoute;
+export default ProtectedRoute;

@@ -14,11 +14,11 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
 
-        <Route path="/users" element={<ProtectRoute requireRoles={["1"]} />}>
+        <Route path="/users" element={<ProtectRoute requireRoles={[1]} />}>
           <Route path="" element={<UserPage />} />
         </Route>
 
-        <Route path="/admin" element={<ProtectRoute requireRoles={["2"]} />}>
+        <Route path="/admin" element={<ProtectRoute requireRoles={[2]} />}>
           <Route path="" element={<AdminDashboard />} />
         </Route>
       </Routes>

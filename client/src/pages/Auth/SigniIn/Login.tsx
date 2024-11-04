@@ -55,10 +55,8 @@ export function Login() {
   const handleSubmitLogin = async (values: Login) => {
     try {
       const response = await login(values.email, values.password);
-      sessionStorage.setItem("isAuth", "true");
-      sessionStorage.setItem("userRole", response.role.toString());
-      console.log(response.role);
-      response.role === 1 ? navigate("/users") : navigate("/admin");
+      const userRole = Number(response.role); // Ensure role is a number
+      userRole === 1 ? navigate("/users") : navigate("/admin");
     } catch (error) {
       console.error("Login failed:", error);
       LoginForm.setErrors({

@@ -12,6 +12,8 @@ export const login = async (email: string, password: string) => {
 
         if (response.data) {
             localStorage.setItem("token", JSON.stringify(response.data));
+            localStorage.setItem("isAuth", "true");
+            localStorage.setItem("userRole", response.data.role.toString());
             return response.data;
         }
 
@@ -19,6 +21,7 @@ export const login = async (email: string, password: string) => {
         throw error;
     }
 };
+
 
 
 export const register = async (username: string, email: string, password: string) => {
@@ -51,8 +54,8 @@ export async function loadUser() {
 
 export async function logout() {
     localStorage.removeItem("token");
-    sessionStorage.removeItem("isAuth");
-    sessionStorage.removeItem("userRole");
+    localStorage.removeItem("isAuth");
+    localStorage.removeItem("userRole");
     window.location.reload();
     document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
