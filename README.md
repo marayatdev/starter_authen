@@ -25,5 +25,5 @@ Follow these steps to get the project up and running:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/marayatdev/Starter_Project.git
+git clone https://github.com/marayatdev/starter_project.git
 cd starter_authen
