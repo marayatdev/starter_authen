@@ -13,7 +13,6 @@ export const login = async (email: string, password: string) => {
         if (response.data) {
             localStorage.setItem("token", JSON.stringify(response.data));
             localStorage.setItem("isAuth", "true");
-            localStorage.setItem("userRole", response.data.role.toString());
             return response.data;
         }
 

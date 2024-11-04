@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 interface ProtectedRouteProps {
   children?: React.ReactNode;
@@ -9,15 +10,18 @@ const ProtectedRoute = ({
   children,
   requireRoles = [],
 }: ProtectedRouteProps) => {
-  const userRole = localStorage.getItem("userRole");
-  const isAuthen = !!localStorage.getItem("isAuth");
+  const token = localStorage.getItem("token");
+  const isAuthen = !!token;
 
   if (!isAuthen) {
     return <Navigate to="/" replace />;
   }
 
+  const decodedToken: { role?: number } = jwtDecode(token || "");
+
   const matchRoles =
-    !requireRoles.length || requireRoles.includes(Number(userRole));
+    !requireRoles.length || requireRoles.includes(Number(decodedToken.role)!);
+
   if (!matchRoles) {
     return <Navigate to="/404" replace />;
   }
