@@ -16,6 +16,7 @@ import { TwitterButton } from "../LogoSignIn/TwitterButton";
 import { login, register } from "../../../services/Auth/auth";
 import { useNavigate } from "react-router-dom";
 import type { Login, Register } from "../../../interfaces/Auth/auth";
+import { jwtDecode } from "jwt-decode";
 
 export function Login() {
   const navigate = useNavigate();
@@ -54,8 +55,10 @@ export function Login() {
 
   const handleSubmitLogin = async (values: Login) => {
     try {
-      const response = await login(values.email, values.password);
-      const userRole = Number(response.role); // Ensure role is a number
+      await login(values.email, values.password);
+      const token = localStorage.getItem("token");
+      const decodedToken: { role?: number } = jwtDecode(token || "");
+      const userRole = Number(decodedToken.role);
       userRole === 1 ? navigate("/users") : navigate("/admin");
     } catch (error) {
       console.error("Login failed:", error);
