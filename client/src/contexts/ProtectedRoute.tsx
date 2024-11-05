@@ -10,7 +10,7 @@ const ProtectedRoute = ({
   children,
   requireRoles = [],
 }: ProtectedRouteProps) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("accessToken");
   const isAuthen = !!token;
 
   if (!isAuthen) {

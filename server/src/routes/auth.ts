@@ -16,6 +16,7 @@ export class AuthRoutes {
     private initializeRoutes() {
         this.router.post(`${this.path}/register`, this.authController.register);
         this.router.post(`${this.path}/login`, this.authController.login);
+        this.router.post(`${this.path}/refresh-token`, authenticateToken, this.authController.refreshAccessToken);
         this.router.get(`${this.path}/me`, authenticateToken, this.authController.getUserMe);
     }
 

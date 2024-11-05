@@ -56,9 +56,10 @@ export function Login() {
   const handleSubmitLogin = async (values: Login) => {
     try {
       await login(values.email, values.password);
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("accessToken");
       const decodedToken: { role?: number } = jwtDecode(token || "");
       const userRole = Number(decodedToken.role);
+
       userRole === 1 ? navigate("/users") : navigate("/admin");
     } catch (error) {
       console.error("Login failed:", error);
