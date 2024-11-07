@@ -1,40 +1,26 @@
-# Stage 1: Build the TypeScript code
-FROM node:18 AS builder
+FROM node:20 as build
+WORKDIR /usr/src/app
+COPY package.json . 
+COPY yarn.lock . 
+RUN yarn install 
+COPY . . 
+RUN yarn prisma generate
+RUN yarn build
 
-# Set working directory
-WORKDIR /app
+FROM node:20-slim
+RUN apt update && apt install libssl-dev dumb-init -y --no-install-recommends
 
-# Copy package.json and yarn.lock
-COPY package.json yarn.lock ./
+# Set environment variable directly in Dockerfile if needed
+ENV NODE_ENV production
 
-# Install dependencies
-RUN yarn install
 
-# Copy the rest of the application files
-COPY . .
+WORKDIR /usr/src/app
+COPY --chown=node:node --from=build /usr/src/app/dist ./dist
+COPY --chown=node:node --from=build /usr/src/app/.env .env
+COPY --chown=node:node --from=build /usr/src/app/package.json .
+COPY --chown=node:node --from=build /usr/src/app/yarn.lock .
+RUN npm install --omit=dev
+COPY --chown=node:node --from=build /usr/src/app/node_modules/.prisma/client  ./node_modules/.prisma/client
 
-# Generate Prisma Client and build TypeScript code
-RUN yarn prisma generate && yarn build
-
-# Stage 2: Run the server with nodemon for development
-FROM node:18
-
-# Set working directory
-WORKDIR /app
-
-# Copy only the necessary files from the builder stage
-COPY --from=builder /app/package.json /app/yarn.lock ./
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/prisma ./prisma
-
-# Install only production dependencies
-RUN yarn install --production
-
-# Install development dependencies, including nodemon for hot reloading
-RUN yarn add nodemon
-
-# Expose the application port (modify if different)
-EXPOSE 4000
-
-# Command to run the server with nodemon
-CMD ["yarn", "nodemon", "--watch", "src", "--exec", "node", "dist/server.js"]
+EXPOSE 8000
+CMD ["dumb-init", "node", "dist/server.js"]

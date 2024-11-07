@@ -1,38 +1,17 @@
-# docker-compose.yml
 version: '3'
 services:
-  # nginx:
-  #   image: nginx:latest
-  #   ports:
-  #     - "80:80"  # เปิดพอร์ต 80 สำหรับการเข้าถึงจากภายนอก
-  #   volumes:
-  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf  # กำหนดไฟล์ config ของ Nginx
-  #   depends_on:
-  #     - client
-  #     - server
 
-  # client:
-  #   build:
-  #     context: ./client
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - REACT_APP_API_URL=http://localhost/api  # URL ของ API สำหรับ client
-  #   expose:
-  #     - "3000"  # เปิดพอร์ตสำหรับภายใน network
-
-  # server:
-  #   build:
-  #     context: ./server
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - DATABASE_HOST=db
-  #     - DATABASE_USER=root
-  #     - DATABASE_PASSWORD=example
-  #     - DATABASE_NAME=myapp
-  #   expose:
-  #     - "5000"  # เปิดพอร์ตสำหรับภายใน network
-  #   depends_on:
-  #     - db
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+    # environment:
+    #   - PORT=8000
+    # depends_on:
+    #   - mysql_db
 
   mysql_db:
     image: mysql:latest

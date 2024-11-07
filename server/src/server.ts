@@ -48,8 +48,6 @@ class App {
     private async initializeRoutes(): Promise<void> {
         const routePath = path.resolve(__dirname, "routes");
 
-        console.log(routePath);
-
         const routeFiles = fs
             .readdirSync(routePath)
             .filter((file) => file.endsWith(".ts") || file.endsWith(".js"));

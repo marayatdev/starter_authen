@@ -68,26 +68,18 @@ class App {
     }
     async initializeRoutes() {
         const routePath = path_1.default.resolve(__dirname, "routes");
-        console.log(routePath);
-        const directories = fs_1.default.readdirSync(routePath, { withFileTypes: true });
-        for (const dir of directories) {
-            if (dir.isDirectory()) {
-                const folderPath = path_1.default.resolve(routePath, dir.name);
-                const routeFiles = fs_1.default
-                    .readdirSync(folderPath)
-                    .filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
-                for (const file of routeFiles) {
-                    try {
-                        const routeModule = await Promise.resolve(`${path_1.default.resolve(folderPath, file)}`).then(s => __importStar(require(s)));
-                        console.log(dir.name);
-                        if (routeModule.default) {
-                            this.app.use(`/api/${dir.name}`, routeModule.default);
-                        }
-                    }
-                    catch (error) {
-                        console.error(`Error loading route module ${file} in ${dir.name}: ${error}`);
-                    }
+        const routeFiles = fs_1.default
+            .readdirSync(routePath)
+            .filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
+        for (const file of routeFiles) {
+            try {
+                const routeModule = await Promise.resolve(`${path_1.default.resolve(routePath, file)}`).then(s => __importStar(require(s)));
+                if (routeModule.default) {
+                    this.app.use("/api", routeModule.default);
                 }
+            }
+            catch (error) {
+                (0, logger_1.logError)(`Error loading route module ${file}: ${error}`);
             }
         }
     }
