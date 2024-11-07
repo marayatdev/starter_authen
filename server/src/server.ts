@@ -47,15 +47,21 @@ class App {
 
     private async initializeRoutes(): Promise<void> {
         const routePath = path.resolve(__dirname, "routes");
+
+        console.log(routePath);
+
         const routeFiles = fs
             .readdirSync(routePath)
-            .filter((file) => file.endsWith(".ts"));
+            .filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
 
         for (const file of routeFiles) {
+
             try {
                 const routeModule = await import(path.resolve(routePath, file));
+
                 if (routeModule.default) {
                     this.app.use("/api", routeModule.default);
+
                 }
             } catch (error) {
                 logError(`Error loading route module ${file}: ${error}`);
