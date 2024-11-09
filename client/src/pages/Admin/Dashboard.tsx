@@ -1,4 +1,4 @@
-import SigOut from "../../components/ui@system/LogOut/SigOut";
+import SigOut from "../../components/Button/LogOut/SigOut";
 
 const AdminDashboard = () => {
   return (

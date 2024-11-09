@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ProtectRoute from "./contexts/ProtectedRoute";
+import ProtectRoute, { PublicRoute } from "./contexts/ProtectedRoute";
 import { NotFoundTitle } from "./pages/NotFound/NotFoundTitle";
 import { Login } from "./pages/Auth/SigniIn/Login";
 import Home from "./pages/Home/Home";
@@ -9,8 +9,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="*" element={<NotFoundTitle />} />
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="/" element={<Home />} />
 
         {routes.map((route, index) => (
           <Route

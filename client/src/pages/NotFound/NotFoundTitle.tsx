@@ -1,7 +1,7 @@
 import { Title, Text, Button, Container, Group } from "@mantine/core";
 import classes from "./NotFoundTitle.module.css";
 import { useNavigate } from "react-router-dom";
-import SigOut from "../../components/ui@system/LogOut/SigOut";
+import SigOut from "../../components/Button/LogOut/SigOut";
 
 export function NotFoundTitle() {
   const navigate = useNavigate();
