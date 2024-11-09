@@ -1,6 +1,5 @@
-version: '3'
+version: "3"
 services:
-
   server:
     build:
       context: ./server
@@ -8,7 +7,6 @@ services:
     restart: always
     ports:
       - "8000:8000"
-
 
   mysql_db:
     image: mysql:latest
@@ -43,7 +41,6 @@ services:
       interval: 1m30s
       timeout: 10s
       retries: 3
-
 
 volumes:
   mysql_data:
