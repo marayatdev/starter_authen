@@ -1,0 +1,22 @@
+version: "3"
+services:
+  mysql_db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password # เปลี่ยนเป็นรหัสผ่านของ root ที่ปลอดภัย
+      MYSQL_DATABASE: server # เปลี่ยนเป็นชื่อฐานข้อมูลที่ต้องการ
+      MYSQL_USER: user # เปลี่ยนเป็นชื่อผู้ใช้ที่ต้องการ
+      MYSQL_PASSWORD: root # เปลี่ยนเป็นรหัสผ่านผู้ใช้ที่ปลอดภัย
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - my_network
+
+volumes:
+  mysql_data:
+
+networks:
+  my_network:

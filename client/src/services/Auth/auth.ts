@@ -1,11 +1,10 @@
 import axios from "axios";
 
 
-const API_URL = import.meta.env.VITE_URL_ENDPOINT_API;
 
 export const login = async (email: string, password: string) => {
     try {
-        const response = await axios.post(`${API_URL}/auth/login`, {
+        const response = await axios.post(`/api/auth/login`, {
             email,
             password,
         });
@@ -26,7 +25,7 @@ export const login = async (email: string, password: string) => {
 export const refreshAccessToken = async () => {
     try {
         const refreshToken = localStorage.getItem("refreshToken");
-        const response = await axios.post(`${API_URL}/auth/refresh-token`, null, {
+        const response = await axios.post(`/api/auth/refresh-token`, null, {
             headers: {
                 Authorization: `Bearer ${refreshToken}`,
             },
@@ -48,7 +47,7 @@ export const refreshAccessToken = async () => {
 
 export const register = async (username: string, email: string, password: string) => {
     try {
-        const response = await axios.post(`${API_URL}/auth/register`, {
+        const response = await axios.post(`/api/auth/register`, {
             username,
             email,
             password,
@@ -63,7 +62,7 @@ export const register = async (username: string, email: string, password: string
 export async function loadUser() {
     try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`${API_URL}/api/auth/me`, {
+        const response = await axios.get(`/api/api/auth/me`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

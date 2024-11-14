@@ -1,39 +1,36 @@
 version: "3"
 services:
   server:
+    image: server:latest
     build:
       context: ./server
       dockerfile: Dockerfile
     restart: always
-    ports:
-      - "8000:8000"
-
-  mysql_db:
-    image: mysql:latest
-    restart: always
+    deploy:
+      replicas: 1
+      mode: replicated
     environment:
-      MYSQL_ROOT_PASSWORD: password # เปลี่ยนเป็นรหัสผ่านของ root ที่ปลอดภัย
-      MYSQL_DATABASE: server # เปลี่ยนเป็นชื่อฐานข้อมูลที่ต้องการ
-      MYSQL_USER: user # เปลี่ยนเป็นชื่อผู้ใช้ที่ต้องการ
-      MYSQL_PASSWORD: root # เปลี่ยนเป็นรหัสผ่านผู้ใช้ที่ปลอดภัย
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - my_network
+      - PORT=8000
 
   client:
+    image: client:latest
+    environment:
+      - API_URL=http://server:8000
     build:
       context: ./client
       dockerfile: Dockerfile
+    deploy:
+      replicas: 1
+      mode: replicated
     restart: always
+    # ports:
+    #   - "3000:80"
 
   revese-proxy:
     image: nginx:latest
     volumes:
       - ./nginx:/etc/nginx/conf.d
-    ports:
+    ports: 
       - "3000:80"
 
     healthcheck:
@@ -41,9 +38,6 @@ services:
       interval: 1m30s
       timeout: 10s
       retries: 3
-
-volumes:
-  mysql_data:
 
 networks:
   my_network:

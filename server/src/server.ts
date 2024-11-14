@@ -34,6 +34,12 @@ class App {
         this.app.use(morgan("dev"));
         this.app.use(cors());
         this.app.use(bodyParser.json());
+
+        this.app.use('/api/health', (_, res) => {
+
+            res.json({ status: 'ok' });
+        })
+
     }
 
     private async initializeDatabase(): Promise<void> {
@@ -46,6 +52,8 @@ class App {
     }
 
     private async initializeRoutes(): Promise<void> {
+
+
         const routePath = path.resolve(__dirname, "routes");
 
         const routeFiles = fs
